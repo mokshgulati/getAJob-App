@@ -22,7 +22,7 @@ db.connect((err) => {
 
 // API to get a list of jobs
 router.get('/jobs', (req, res) => {
-  db.query('SELECT * FROM openjobs', (err, results) => {
+  db.query('SELECT * FROM openjobs WHERE isActive=1', (err, results) => {
     if (err) {
       res.status(500).json({ message: 'Failed to fetch jobs', err });
     };
