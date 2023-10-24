@@ -47,10 +47,11 @@ router.get('/jobs/:jobId', (req, res) => {
 
 // API to add job to DB when candidate apply for one
 router.post('/apply', (req, res) => {
-  const jobId = req.body.jobId;
-  const candidateName = req.body.name;
-  const phone = req.body.phone;
-  const email = req.body.email;
+  let body = JSON.parse(req.body);
+  const jobId = body.jobId;
+  const candidateName = body.name;
+  const phone = body.phone;
+  const email = body.email;
   db.query(`INSERT INTO candidatejobportal (jobId, candidateName, phone, email) VALUES (${jobId}, ${candidateName}, ${phone}, ${email})`, (err, result) => {
     if (err) {
       res.status(500).json({ error: 'Failed to add job' });
