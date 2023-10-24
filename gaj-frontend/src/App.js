@@ -1,15 +1,9 @@
-import React from 'react'
-import Navbar from "./Components/Navbar/Navbar";
-import Search from "./Components/Search/Search";
-import Jobs from "./Components/Jobs/Jobs";
+import React, { useEffect } from 'react'
+import MyJobApp from "./CoreApp/MyJobApp";
 
 const App = () => {
   return (
-    <div className='w-[85%] m-auto bg-white'>
-      <Navbar />
-      <Search />
-      <Jobs />
-    </div>
+    <MyJobApp/>
   )
 }
 

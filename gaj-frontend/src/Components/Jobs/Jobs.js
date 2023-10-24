@@ -7,7 +7,32 @@ import logo_meta from '../../Assets/Logo/meta.png'
 import logo_amazon from '../../Assets/Logo/amazon.png'
 import logo_tesla from '../../Assets/Logo/tesla.png'
 
-const Data = [
+const [data, setData] = useState({});
+
+useEffect(()=>{
+  fetch('http://localhost:3001/api/jobs')
+  .then((response) => response.json())
+  .then((data) => {
+    setData(data);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+},[]);
+
+const getJobDataById = (id) => {
+  fetch(`http://localhost:3001/api/jobs/${id}`)
+  .then((response) => response.json())
+  .then((data) => {
+    setData(data);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+}
+
+// ==================== SAMPLE DATA ==================
+const sampleData = [
   {
     id: 1,
     image: logo_google,
@@ -63,6 +88,7 @@ const Data = [
     company: 'Tesla'
   }
 ]
+// ==================== /SAMPLE DATA/ ==================
 
 const Jobs = () => {
   return (
@@ -70,7 +96,7 @@ const Jobs = () => {
       <div className="jobContainer flex gap-10 justify-center flex-wrap items-center py-10" >
 
         {
-          Data.map(({ id, image, title, time, location, desc, company }) => {
+          data.map(({ id, image, title, time, location, desc, company }) => {
             return (
               <div key={id} className="group group/item singleJob w-[250px] p-[20px] bg-white rounded-[10px] hover:bg-blueColor shadow-lg shadow-greyIsh-400/700 hover: shadow-lg">
 
@@ -89,7 +115,7 @@ const Jobs = () => {
                   <span className='text-[14px] py-[1rem] block group-hover:text-white'>{company}</span>
                 </div>
 
-                <button className='border-[2px] rounded-[10px] block p-[10px] w-full text-[14px] font-semibold text-textColor hover:bg-white group-hover/item:text-textColor group-hover:text-white'>Apply Now</button>
+                <button onClick={(id)=>getJobDataById(id)} className='border-[2px] rounded-[10px] block p-[10px] w-full text-[14px] font-semibold text-textColor hover:bg-white group-hover/item:text-textColor group-hover:text-white'>Apply Now</button>
 
               </div>
             )
